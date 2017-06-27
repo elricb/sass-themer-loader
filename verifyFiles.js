@@ -26,6 +26,10 @@ module.exports = function verifyFiles($_loader, $_options, $_themes) {
                     );
                 }
 
+                if ($_options.test) {
+                    console.log("\nsass-themer-loader test\n", result, "\n");
+                }
+
                 if (total === tested) {
                     $_loader.callback(null, result);
                 }

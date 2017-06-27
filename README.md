@@ -64,6 +64,17 @@ The below example replaces instances of "#{VAR1}" with the defined HOST and "#{V
     }
 ```
 
+### Test (optional)
+
+[boolean] Log the @import statements.
+
+```javascript
+loader: 'sass-themer-loader',
+options: {
+    test: true
+}
+```
+
 
 ## Sample Of use
 

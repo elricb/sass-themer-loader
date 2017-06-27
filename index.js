@@ -16,7 +16,8 @@ module.exports = function (source) {
                 ],
                 verify: false,
                 base: 'index',
-                replace: null
+                replace: null,
+                test: false
             },
             loaderUtils.getOptions
                 ? loaderUtils.getOptions(this)
@@ -25,17 +26,13 @@ module.exports = function (source) {
         themes = JSON.parse(source) || null,
         contextCallback = options.verify ? this.async() : null;
 
-    var total = 0,
-        tested = 0,
-        result = '';
-
     if (!themes) {
         this.emitWarning(this.resource + ' does not contain valid json.');
         return source;
     }
 
     if (!options.verify) {
-        return options.modules.map(function ($_module) {
+        source = options.modules.map(function ($_module) {
             return themes.map(function ($_theme) {
                 return replaceMap(
                     '@import \'' + $_theme + '/' + $_module + '/' + options.base + '\'',
@@ -43,6 +40,12 @@ module.exports = function (source) {
                 );
             }).join(';');
         }).join(';') + ';';
+
+        if (options.test) {
+            console.log("\nsass-themer-loader test\n", source, "\n");
+        }
+
+        return source;
     }
 
     verifyFiles(this, options, themes);
