@@ -2,7 +2,7 @@
 
 ## About
 
-Creates a list of scss @import statements prior to sass parsing.  Intended to be run prior to the sass-loader [a link](https://github.com/webpack-contrib/sass-loader).
+Creates a list of scss @import statements prior to sass parsing.  Intended to be run prior to the sass-loader [link](https://github.com/webpack-contrib/sass-loader).
 
 ## Options & Defaults
 
@@ -14,12 +14,12 @@ Default Folder Chain:
 
 ```json
 [
-    'typeography',
-    'variable',
-    'mixin',
-    'keyframe',
-    'type',
-    'site'
+    "typeography",
+    "variable",
+    "mixin",
+    "keyframe",
+    "type",
+    "site"
 ]
 ```
 

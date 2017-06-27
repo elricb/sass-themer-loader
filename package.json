@@ -1,9 +1,9 @@
 {
-  "name": "scss-themer-loader",
-  "version": "1.0.0",
-  "description": "Pre Scss @import assembler",
-  "url" : "https://www.npmjs.com/package/scss-themer-loader",
-  "email" : "elricdesigns@gmail.com",
+  "name": "sass-themer-loader",
+  "version": "1.0.2",
+  "description": "Pre Sass @import assembler",
+  "url": "https://www.npmjs.com/package/sass-themer-loader",
+  "email": "elricdesigns@gmail.com",
   "main": "index.js",
   "scripts": {
     "test": "n/a"
@@ -21,8 +21,12 @@
   "dependencies": {
     "loader-utils": "^1.1.0"
   },
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/elricdesigns/scss-themer-loader"
-  }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/elricdesigns/sass-themer-loader.git"
+  },
+  "bugs": {
+    "url": "https://github.com/elricdesigns/sass-themer-loader/issues"
+  },
+  "homepage": "https://github.com/elricdesigns/sass-themer-loader#readme"
 }
