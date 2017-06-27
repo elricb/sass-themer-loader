@@ -14,11 +14,11 @@ Default Module Folder Chain:
 
 ```json
 [
-    "typeography",
-    "variable",
-    "mixin",
+    "variables",
+    "mixins",
     "keyframe",
-    "type",
+    "typeography",
+    "tags",
     "site"
 ]
 ```

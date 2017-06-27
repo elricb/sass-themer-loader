@@ -7,11 +7,11 @@ module.exports = function (source) {
             {},
             {
                 modules: [
-                    'typeography',
-                    'variable',
-                    'mixin',
+                    'variables',
+                    'mixins',
                     'keyframe',
-                    'type',
+                    'typeography',
+                    'tags',
                     'site'
                 ],
                 verify: false,

@@ -1,6 +1,6 @@
 {
   "name": "sass-themer-loader",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Pre Sass @import assembler",
   "url": "https://www.npmjs.com/package/sass-themer-loader",
   "email": "elricdesigns@gmail.com",
