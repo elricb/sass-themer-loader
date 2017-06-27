@@ -6,11 +6,11 @@ Creates a list of scss @import statements prior to sass parsing.  Intended to be
 
 ## Options & Defaults
 
-### Folder Chain
+### Modules (optional)
 
-The order of folders imported in each theme.  E.g. [theme]/[folder chain]/index.scss
+[array] The order of folders imported in each theme.  E.g. [theme]/[module]/index.scss
 
-Default Folder Chain:
+Default Module Folder Chain:
 
 ```json
 [
@@ -23,7 +23,7 @@ Default Folder Chain:
 ]
 ```
 
-Folder chain option:
+modules option:
 
 ```javascript
     loader: 'sass-themer-loader',
@@ -35,9 +35,9 @@ Folder chain option:
     }
 ```
 
-### Verify
+### Verify (optional)
 
-By default verify is false and will write @import statements for every folder in every theme path.
+[boolean] By default verify is false and will write @import statements for every folder in every theme path.  In this setup you will need to include every potential "module" folder.  Blank index.scss files are ok.  This is the fastest compile option.
 
 Setting verify to true will verify each folder chain exists with an index.scss file.  If it doesn't exist, it will skip writting the @import statement for that file.
 
@@ -45,6 +45,22 @@ Setting verify to true will verify each folder chain exists with an index.scss f
     loader: 'sass-themer-loader',
     options: {
         verify: true
+    }
+```
+
+### Replace (optional)
+
+[object] Replace can take variables (like webpack parameters) and integrate them into the import statements.
+
+The below example replaces instances of "#{VAR1}" with the defined HOST and "#{VAR2}" with "test".
+
+```javascript
+    loader: 'sass-themer-loader',
+    options: {
+        replace: {
+            '#{VAR1}': process.env.HOST,
+            '#{VAR2}': 'test'
+        }
     }
 ```
 
@@ -105,15 +121,15 @@ export.default = {
 };
 ```
 
-### sass.thmr
+### scss.thmr
 
-Inside your sass.thmr file (or whatever you want to name it).  Set the path to your sass theme folder.  This is the base folder containing your modules ([modules]/index.scss).  Generally included from your main .js file (require/import).
+This file is in json array format.  Inside your sass.thmr file (or whatever you want to name it), set the path to your sass theme folder.  This is the base folder containing your modules ([modules]/index.scss).  Generally included from your main .js file (require/import).
 
-```javascript
+```json
 [
-    '~public/scss/themes/default',
-    '~public/scss/themes/greyform',
-    '~public/scss/themes/mysite'
+    "~public/scss/themes/default",
+    "~public/scss/themes/greyform",
+    "~public/scss/themes/mysite"
 ]
 ```
 

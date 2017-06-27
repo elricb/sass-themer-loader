@@ -1,3 +1,5 @@
+const replaceMap  = require('./replaceMap');
+
 module.exports = function verifyFiles($_loader, $_options, $_themes) {
     var total  = $_options.modules.length * $_themes.length,
         tested = 0,
@@ -18,7 +20,10 @@ module.exports = function verifyFiles($_loader, $_options, $_themes) {
                 tested++;
 
                 if (!$_err) {
-                    result += '@import \'' + $_theme + '/' + $_module + '/' + $_options.base + '\';';
+                    result += replaceMap(
+                        '@import \'' + $_theme + '/' + $_module + '/' + $_options.base + '\';',
+                        $_options.replace
+                    );
                 }
 
                 if (total === tested) {

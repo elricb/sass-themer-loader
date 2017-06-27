@@ -1,5 +1,6 @@
 const loaderUtils = require('loader-utils');
 const verifyFiles = require('./verifyFiles');
+const replaceMap  = require('./replaceMap');
 
 module.exports = function (source) {
     const options = Object.assign(
@@ -13,13 +14,15 @@ module.exports = function (source) {
                     'type',
                     'site'
                 ],
-                verify: true,
-                base: 'index'
+                verify: false,
+                base: 'index',
+                replace: null
             },
-            loaderUtils.getOptions(this) || {}
+            loaderUtils.getOptions
+                ? loaderUtils.getOptions(this)
+                : loaderUtils.parseQuery(this.resourceQuery)
         ),
         themes = JSON.parse(source) || null,
-        contextResolve = this.resolve,
         contextCallback = options.verify ? this.async() : null;
 
     var total = 0,
@@ -34,7 +37,10 @@ module.exports = function (source) {
     if (!options.verify) {
         return options.modules.map(function ($_module) {
             return themes.map(function ($_theme) {
-                return '@import \'' + $_theme + '/' + $_module + '/' + options.base + '\'';
+                return replaceMap(
+                    '@import \'' + $_theme + '/' + $_module + '/' + options.base + '\'',
+                    options.replace
+                );
             }).join(';');
         }).join(';') + ';';
     }
