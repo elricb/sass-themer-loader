@@ -1,6 +1,6 @@
 const loaderUtils = require('loader-utils');
 const verifyFiles = require('./verifyFiles');
-const replaceMap  = require('./replaceMap');
+const assembleImport  = require('./assembleImport');
 
 module.exports = function (source) {
     const options = Object.assign(
@@ -24,29 +24,26 @@ module.exports = function (source) {
                 : loaderUtils.parseQuery(this.resourceQuery)
         ),
         themes = JSON.parse(source) || null,
-        contextCallback = options.verify ? this.async() : null;
+        output = [];
 
     if (!themes) {
         this.emitWarning(this.resource + ' does not contain valid json.');
         return source;
     }
 
+    this.async();
+
+    //Order
+    options.modules.map(function ($_module) {
+        themes.map(function ($_theme) {
+            output.push($_theme + '/' + $_module);
+        });
+    });
+
     if (!options.verify) {
-        source = options.modules.map(function ($_module) {
-            return themes.map(function ($_theme) {
-                return replaceMap(
-                    '@import \'' + $_theme + '/' + $_module + '/' + options.base + '\'',
-                    options.replace
-                );
-            }).join(';');
-        }).join(';') + ';';
-
-        if (options.test) {
-            console.log("\nsass-themer-loader test\n", source, "\n");
-        }
-
-        return source;
+        assembleImport(this, options, output);
+        return;
     }
 
-    verifyFiles(this, options, themes);
+    verifyFiles(this, options, output);
 }

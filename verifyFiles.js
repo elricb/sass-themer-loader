@@ -1,39 +1,29 @@
-const replaceMap  = require('./replaceMap');
+const assembleImport  = require('./assembleImport');
 
-module.exports = function verifyFiles($_loader, $_options, $_themes) {
-    var total  = $_options.modules.length * $_themes.length,
+module.exports = function verifyFiles($_loader, $_options, $_output) {
+    var total  = $_output.length,
         tested = 0,
-        result = '',
         base,
         path;
 
-    $_options.modules.map(function ($_module) {
-        $_themes.map(function ($_theme) {
-            base = $_theme.substr(0,1) === '~' || $_theme.substr(0,1) === '/'
-                ? './'
-                : $_loader.context;
-            path = $_theme.substr(0,1) === '~'
-                ? $_theme.substr(1) + '/' + $_module + '/' + $_options.base + '.scss'
-                : $_theme + '/' + $_module + '/' + $_options.base + '.scss';
+    $_output.map(function ($_path) {
+        base = $_path.substr(0,1) === '~' || $_path.substr(0,1) === '/'
+            ? './'
+            : $_loader.context;
+        path = $_path.substr(0,1) === '~'
+            ? $_path.substr(1) + '/' + $_options.base + '.scss'
+            : $_path + '/' + $_options.base + '.scss';
 
-            $_loader.resolve(base, path, function($_err) {
-                tested++;
+        $_loader.resolve(base, path, function($_err) {
+            tested++;
 
-                if (!$_err) {
-                    result += replaceMap(
-                        '@import \'' + $_theme + '/' + $_module + '/' + $_options.base + '\';',
-                        $_options.replace
-                    );
-                }
+            if ($_err) {
+                $_output.splice($_output.indexOf($_path), 1);
+            }
 
-                if ($_options.test) {
-                    console.log("\nsass-themer-loader test\n", result, "\n");
-                }
-
-                if (total === tested) {
-                    $_loader.callback(null, result);
-                }
-            });
+            if (total === tested) {
+                assembleImport($_loader, $_options, $_output);
+            }
         });
     });
 };
