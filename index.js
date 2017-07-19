@@ -17,7 +17,8 @@ module.exports = function (source) {
                 verify: false,
                 base: 'index',
                 replace: null,
-                test: false
+                test: false,
+                modular: true
             },
             loaderUtils.getOptions
                 ? loaderUtils.getOptions(this)
@@ -34,11 +35,18 @@ module.exports = function (source) {
     this.async();
 
     //Order
-    options.modules.map(function ($_module) {
-        themes.map(function ($_theme) {
-            output.push($_theme + '/' + $_module);
+    if (options.modular) {
+        options.modules.map(function ($_module) {
+            themes.map(function ($_theme) {
+                output.push($_theme + '/' + $_module);
+            });
         });
-    });
+    }
+    else {
+        themes.map(function ($_theme) {
+            output.push($_theme);
+        });
+    }
 
     if (!options.verify) {
         assembleImport(this, options, output);
