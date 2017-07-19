@@ -1,5 +1,5 @@
 module.exports = function replaceMap($_string, $_map) {
-    if (!$_map || !$_map.length) {
+    if (!$_map || !Object.keys($_map).length) {
         return $_string;
     }
 
