@@ -3,8 +3,8 @@ module.exports = function replaceMap($_string, $_map) {
         return $_string;
     }
 
-    Object.keys($_map).map(function($_target, $_index) {
-        $_string = $_string.replace($_map[$_index], $_target);
+    Object.keys($_map).map(function($_target) {
+        $_string = $_string.replace($_target, $_map[$_target]);
     });
 
     return $_string;

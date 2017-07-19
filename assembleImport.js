@@ -3,7 +3,7 @@ const replaceMap  = require('./replaceMap');
 module.exports = function ($_loader, $_options, $_output) {
     let source = $_output.map(function ($_path) {
         return replaceMap(
-            '@import \'' + $_path + '/' + $_options.base + '\'',
+            '@import \'' + $_path + ($_options.base ? '/' + $_options.base : '') + '\'',
             $_options.replace
         );
     }).join(';') + ';';
